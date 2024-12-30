@@ -1,52 +1,166 @@
-import React, {useState} from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
-import {CgProfile} from 'react-icons/cg';
-// import '../css/Header.css';
-import {logo} from "../../assets/index";
+import { logo } from "../../assets/index";
+import AppBar from '@mui/material/AppBar';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+
+const pages = ['Home', 'IPs', 'Bidders'];
+const settings = ['My NFT', 'My Bids'];
 
 const Header = () => {
-  const [show, setShow] = useState(false);
-  function view() {
-      setShow(!show);
-  }
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
+
   return (
-    <header 
-    data-testid='header-start'
-    className='header top-0 fixed z-10 flex justify-between bg-gray-100 shadow-xl opacity-75 w-full py-3 text-white px-8'
-    >
-      {/* <div className='flex justify-between'> */}
-      <div><Link to="/"><img src={logo} alt="home-image" className='cursor-pointer h-14 rounded-full'/></Link> </div>
-      <nav className=''>
-        <ul className='flex justify-between gap-16 mt-3 text-xl font-serif'>
-          <li className=''>
-            <Link className='hover:text-black text-gray-800' to="/">Home</Link>
-          </li>
+    <AppBar position="static" sx={{ backgroundColor: 'black', height: '100px' }}>
+      <Container maxWidth="xl">
+        <Toolbar>
+          <Avatar alt="User Profile" src={logo} />
 
-          <li>
-            <Link className='hover:text-black text-gray-800' to="/ips">Ips</Link>
-          </li>
+          {/* Mobile Menu Icon */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography
+                    sx={{
+                      textAlign: 'center'
+                    }}
+                  >
+                    <Link to={`/${page.toLowerCase()}`}>{page}</Link>
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
 
-          <li>
-            <Link className='hover:text-black text-gray-800' to="/bidders">Bidders</Link>
-          </li>
-         
-          <li>
-               <CgProfile size={37} 
-               onClick={view}
-               className="text-black hover:text-gray-600 transition duration-5"        
-               />
+          {/* Logo and Title */}
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
 
-              {show ? <ul className='-ml-32'>
-              <li className='hover:brightness-125 text-center text-lg bg-gray-600 px-10 cursor-pointer py-1 mb-1'><Link to="/mynfts">My Nft</Link></li>
-              <li className='hover:brightness-125 text-center text-lg bg-gray-600 px-10 cursor-pointer py-1'><Link to="/mybidding">My Bids</Link></li>
-            </ul> : null}
-          </li>
+          {/* Desktop Menu Links */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center', alignItems: 'center', py: 2, px: 3 }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  display: 'block',
+                  '& a': {
+                    color: '#eab308',
+                    textDecoration: 'none',
+                    padding: '8px 16px',
+                    borderRadius: '20px',
+                    transition: 'background-color 0.3s ease',
+                    '&:hover': {
+                      backgroundColor: '#eab308',
+                      color: 'black',
+                    },
+                  },
+                }}
+              >
+                <Link to={page === 'Home' ? '/' : `/${page.toLowerCase()}`}>{page}</Link>
+              </Button>
+            ))}
+          </Box>
 
-        </ul>
-      </nav>
-    {/* </div> */}
-    </header>
-  )
-}
 
-export default Header
+          {/* User Profile and Settings */}
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open Profile">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <AccountCircle sx={{ fontSize: 40, color: "#eab308" }} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    <Link to={`/${setting.toLowerCase().replace(' ', '')}`} className="hover:text-black">{setting}</Link>
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+
+export default Header;

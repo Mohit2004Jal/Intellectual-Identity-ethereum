@@ -1,18 +1,11 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import ReactPaginate from 'react-paginate';
 import '../../css/Style.css';
 import { TransactionContext } from '../../context/TransactionContext';
-import { BidderContext } from '../../context/BidderContext';
 
-const Bidtable = ({data}) => {
-  const { depositBid, refundBid, bidData} = useContext(BidderContext);
-  const { connectWallet, currentAccount, AcceptBid} = useContext(TransactionContext);  
+const Bidtable = ({ data }) => {
+  const {connectWallet, currentAccount, AcceptBid } = useContext(TransactionContext);
   const [currentItems, setCurrentItems] = useState([]);
-  const [form, setForm] = useState({
-    id: '',
-    address: '',
-    amount: ''
-  });
 
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -28,15 +21,10 @@ const Bidtable = ({data}) => {
     const newOffset = (event.selected * itemsPerPage) % data.length;
     setItemOffset(newOffset);
   };
-  
+
   const acceptBidding = (tokenId, bidderAddress, bidValue) => {
     console.log(tokenId, bidderAddress, bidValue);
     AcceptBid(tokenId, bidderAddress, bidValue);
-  }
-
-  function vals (tokenID, bidderAddress, bidValue){
-    console.log("marriage", tokenID, bidderAddress, bidValue);
-    //AcceptBid(2, "0x57614b7DFcBdb14907C9573f712461Ed3c983a56", "0.1");
   }
 
   return (
@@ -55,27 +43,27 @@ const Bidtable = ({data}) => {
         </thead>
         <tbody className='bg-gray-100'>
 
-        {data.map((item,index) => ( 
-            <tr key={index}> 
+          {data.map((item, index) => (
+            <tr key={index}>
               <td >{index}</td>
-              <td >{item.ownerIPname}</td>    
-              <td className='text-black'>{item.bidderAddress}</td>             
+              <td >{item.ownerIPname}</td>
+              <td className='text-black'>{item.bidderAddress}</td>
               <td>{item.bidValue} ether</td>
               <td className='text-center'>
-                <button 
-                className='bg-black text-white py-1 px-6 rounded' 
-                onClick={(event) => acceptBidding(item.tokenID, item.bidderAddress, item.bidValue, event)}
+                <button
+                  className='bg-black px-6 py-1 rounded text-white'
+                  onClick={(event) => acceptBidding(item.tokenID, item.bidderAddress, item.bidValue, event)}
                 >
-                Accept
+                  Accept
                 </button>
               </td>
               <td className='text-center'>{item.bidAccepted}</td>
               <td>{item.timestamp}</td>
             </tr>
-         ))
-         }         
+          ))
+          }
         </tbody>
-      </table> 
+      </table>
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
@@ -90,7 +78,7 @@ const Bidtable = ({data}) => {
         nextLinkClassName="page-num"
         activeLinkClassName="active"
       />
-     </div>
+    </div>
   )
 }
 
