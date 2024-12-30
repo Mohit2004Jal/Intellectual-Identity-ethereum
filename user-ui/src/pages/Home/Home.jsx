@@ -98,7 +98,7 @@ const Home = () => {
         </div>
       </div> */}
 
-      <div className='bg-gray-100 p-20 text-center content'>
+      {/* <div className='bg-gray-100 p-20 text-center content'>
         <h1 className='mb-5 text-4xl text-center'>Register your intellectual property</h1>
         <p className='mb-5 text-2xl text-center'>Get your IP approval!</p>
         <div className='text-center'>
@@ -109,7 +109,7 @@ const Home = () => {
             </div>
           </NavLink>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className='flex flex-wrap justify-center my-28'>
         <img src={guerlia} alt="" className='shadow-gray-500/50 shadow-lg border rounded-lg w-96 h-96' />
