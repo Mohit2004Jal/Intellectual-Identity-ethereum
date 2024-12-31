@@ -16,6 +16,10 @@ module.exports = {
     },
     extend: {
       colors: {
+        themeOne: "hsl(var(--theme-one))",
+        themeTwo: "hsl(var(--theme-two))",
+        themeThree: "hsl(var(--theme-three))",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -62,6 +66,10 @@ module.exports = {
         "Oswald": ["Oswald", ...fontFamily.sans],
       },
       keyframes: {
+        "rainbow": {
+          "0%": { "background-position": "0%" },
+          "100%": { "background-position": "200%" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -82,9 +90,15 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "shiny-text": "shiny-text 8s infinite"
+        "shiny-text": "shiny-text 8s infinite",
+        "rainbow": "rainbow var(--speed, 2s) infinite linear"
       },
     },
+  },
+  variants: {
+    extend: {
+      opacity: ['group-hover'],
+    }
   },
   plugins: [require("tailwindcss-animate")],
 };

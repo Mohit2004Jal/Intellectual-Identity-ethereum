@@ -14,7 +14,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['Home', 'IPs', 'Bidders'];
 const settings = ['My NFT', 'My Bids'];
@@ -35,7 +34,7 @@ const Header = () => {
           <Avatar alt="User Profile" src={logo} />
 
           {/* Mobile Menu Icon */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, color: "goldenrod" }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -69,33 +68,12 @@ const Header = () => {
                       textAlign: 'center'
                     }}
                   >
-                    <Link to={`/${page.toLowerCase()}`}>{page}</Link>
+                    <Link to={page === 'Home' ? '/' : `/${page.toLowerCase()}`}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-
-          {/* Logo and Title */}
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
 
           {/* Desktop Menu Links */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center', alignItems: 'center', py: 2, px: 3 }}>
@@ -123,7 +101,6 @@ const Header = () => {
               </Button>
             ))}
           </Box>
-
 
           {/* User Profile and Settings */}
           <Box sx={{ flexGrow: 0 }}>
