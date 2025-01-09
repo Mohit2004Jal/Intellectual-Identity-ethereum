@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useContext } from 'react'
 import ReactPaginate from 'react-paginate';
 import '../../css/Style.css';

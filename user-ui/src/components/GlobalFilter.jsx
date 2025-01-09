@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
-import regeneratorRuntime from "regenerator-runtime";
 import '../css/App.css';
 
 // import tw from "twin.macro";
@@ -33,7 +32,7 @@ const GlobalFilter = ({
     globalFilter,
     setGlobalFilter,
   }) =>  {
-  const count = preGlobalFilteredRows.length;
+  // const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
