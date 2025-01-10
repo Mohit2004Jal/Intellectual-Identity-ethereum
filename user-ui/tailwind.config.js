@@ -93,7 +93,7 @@ module.exports = {
           },
         },
         gradient: {
-          to: {
+          "0%": {
             backgroundPosition: "var(--bg-size) 0",
           },
         },
@@ -105,6 +105,25 @@ module.exports = {
             opacity: "0",
           },
         },
+        spinAround: {
+          "0%": {
+            transform: "translateZ(0) rotate(0)",
+          },
+          "15%, 35%": {
+            transform: "translateZ(0) rotate(90deg)",
+          },
+          "65%, 85%": {
+            transform: "translateZ(0) rotate(270deg)",
+          },
+          "100%": {
+            transform: "translateZ(0) rotate(360deg)",
+          },
+        },
+        shimmerSlide: {
+          to: {
+            transform: "translate(calc(100cqw - 100%), 0)",
+          },
+        },
       },
       animation: {
         accordionDown: "accordionDown 0.2s ease-out",
@@ -112,7 +131,9 @@ module.exports = {
         shinyText: "shinyText 8s infinite",
         rainbow: "rainbow var(--speed, 2s) infinite linear",
         gradient: "gradient 8s linear infinite",
-        "meteor-effect": "meteor 5s linear infinite",
+        meteorEffect: "meteor 5s linear infinite",
+        spinAround: "spinAround calc(var(--speed) * 2) infinite linear",
+        shimmerSlide: "shimmerSlide var(--speed) ease-in-out infinite alternate",
       },
     },
   },

@@ -3,10 +3,8 @@ import React, { useContext, useState } from 'react';
 import { TransactionContext } from '../../context/TransactionContext';
 import { useNavigate } from "react-router-dom";
 import { uploadFileToIPFS } from "../../pinata";
-import { ChevronRight } from "lucide-react";
 
 import { cn } from "../lib/utils";
-import { AnimatedGradientText } from "../magicui/gradient-button";
 import { Label } from "../../pages/Contact/label";
 import { Input } from "../../pages/Contact/input";
 import { FileUpload } from "../magicui/upload";
