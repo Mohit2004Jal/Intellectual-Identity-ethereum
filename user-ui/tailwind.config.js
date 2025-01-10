@@ -1,10 +1,12 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: ["class"], // Combined darkMode setup
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}", // Includes all file types from both configs
   ],
   theme: {
     container: {
@@ -16,10 +18,10 @@ module.exports = {
     },
     extend: {
       colors: {
+        // Custom colors with CSS variables
         themeOne: "hsl(var(--theme-one))",
         themeTwo: "hsl(var(--theme-two))",
         themeThree: "hsl(var(--theme-three))",
-
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -53,6 +55,10 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Include all default Tailwind colors as CSS variables
+        ...Object.fromEntries(
+          Object.entries(flattenColorPalette(colors)).map(([key, val]) => [`--${key}`, val])
+        ),
       },
       borderRadius: {
         lg: `var(--radius)`,
@@ -61,24 +67,24 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        "Lobster": ["Lobster", "cursive", ...fontFamily.sans],
-        "Roboto": ["Roboto", ...fontFamily.sans],
-        "Oswald": ["Oswald", ...fontFamily.sans],
+        Lobster: ["Lobster", "cursive", ...fontFamily.sans],
+        Roboto: ["Roboto", ...fontFamily.sans],
+        Oswald: ["Oswald", ...fontFamily.sans],
       },
       keyframes: {
-        "rainbow": {
+        rainbow: {
           "0%": { "background-position": "0%" },
           "100%": { "background-position": "200%" },
         },
-        "accordion-down": {
+        accordionDown: {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
-        "accordion-up": {
+        accordionUp: {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "shiny-text": {
+        shinyText: {
           "0%, 90%, 100%": {
             "background-position": "calc(-100% - var(--shiny-width)) 0",
           },
@@ -86,12 +92,20 @@ module.exports = {
             "background-position": "calc(100% + var(--shiny-width)) 0",
           },
         },
-        "gradient": {
-          to: {
+        gradient: {
+          "0%": {
             backgroundPosition: "var(--bg-size) 0",
           },
         },
-        "spin-around": {
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
+        spinAround: {
           "0%": {
             transform: "translateZ(0) rotate(0)",
           },
@@ -105,28 +119,43 @@ module.exports = {
             transform: "translateZ(0) rotate(360deg)",
           },
         },
-        "shimmer-slide": {
+        shimmerSlide: {
           to: {
             transform: "translate(calc(100cqw - 100%), 0)",
           },
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "shiny-text": "shiny-text 8s infinite",
-        "rainbow": "rainbow var(--speed, 2s) infinite linear",
-        "gradient": "gradient 8s linear infinite",
-        "shimmer-slide":
-          "shimmer-slide var(--speed) ease-in-out infinite alternate",
-        "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+        accordionDown: "accordionDown 0.2s ease-out",
+        accordionUp: "accordionUp 0.2s ease-out",
+        shinyText: "shinyText 8s infinite",
+        rainbow: "rainbow var(--speed, 2s) infinite linear",
+        gradient: "gradient 8s linear infinite",
+        meteorEffect: "meteor 5s linear infinite",
+        spinAround: "spinAround calc(var(--speed) * 2) infinite linear",
+        shimmerSlide: "shimmerSlide var(--speed) ease-in-out infinite alternate",
       },
     },
   },
   variants: {
     extend: {
-      opacity: ['group-hover'],
-    }
+      opacity: ["group-hover"],
+    },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    addVariablesForColors, // Add CSS variables for all colors
+  ],
 };
+
+// Function to add CSS variables for colors
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}
